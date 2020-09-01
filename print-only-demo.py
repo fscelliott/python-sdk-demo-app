@@ -42,3 +42,21 @@ if discount_enabled:
 else:      
       logging.info('{} did not get the discount feature'.format(user_id))
       logging.info('{} did not make a purchase'.format(user_id))
+
+
+
+def on_decision(decision_type, user_id, attributes, decision_info):
+    # Add a DECISION Notification Listener for type FEATURE
+    if decision_type == 'feature-test':
+        # Access information about feature, for example, key and enabled status
+        print decision_info.get('feature_key')
+        print decision_info.get('feature_enabled')
+        print decision_info.get('source')      
+        #Send data to analytics provider here
+  
+notification_id = optimizely_client.notification_center.add_notification_listener(
+enums.NotificationTypes.DECISION, on_decision)
+
+
+
+
