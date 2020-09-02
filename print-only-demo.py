@@ -30,9 +30,10 @@ def on_decision_1(decision_type, user_id, attributes, decision_info):
     if decision_type == 'feature':
         # Access information about feature, for example, key and enabled status
         #print('notification listener:')
-        print('decision info from Not listener: flag key + enabled?')
+        print('decision info from Not listener: flag key + enabled? + source')
         print(decision_info.get('feature_key'))
         print(decision_info.get('feature_enabled'))
+        print(decision_info.get('source'))
         
         #print(decision_info.get('source'))      
         #Send data to analytics provider here
