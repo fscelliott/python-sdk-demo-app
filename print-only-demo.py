@@ -46,6 +46,7 @@ def on_decision_2(decision_type, user_id, attributes, decision_info):
         print('decision info from Not listener: flag key + enabled?')
         print(decision_info.get('feature_key'))
         print(decision_info.get('feature_enabled'))
+        print(decision_info.get('source-info'))
         
         #print(decision_info.get('source'))      
         #Send data to analytics provider here        
@@ -64,7 +65,7 @@ discount_enabled = optimizely_client.is_feature_enabled('discount', user_id)
 # For now, let's view logging statements 
 
 if discount_enabled:  
-      notification_id = optimizely_client.notification_center.add_notification_listener(
+      notification_id_2 = optimizely_client.notification_center.add_notification_listener(
 enums.NotificationTypes.DECISION, on_decision_2)
       discount_amount = optimizely_client.get_feature_variable('discount', 'amount', user_id)
       logging.info('{} got a discount of {}'.format(user_id, str(discount_amount)))
