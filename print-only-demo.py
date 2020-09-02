@@ -11,6 +11,7 @@ import logging
 import random
 from optimizely import optimizely
 from optimizely.helpers import enums
+from optimizely.notification_center import NotificationCenter
 
 # Set log level to INFO
 logging.basicConfig(level=logging.INFO)
@@ -47,11 +48,14 @@ else:
 
 def on_decision(decision_type, user_id, attributes, decision_info):
     # Add a DECISION Notification Listener for type FEATURE
-    if decision_type == 'feature-test':
+    logging.info('NOT TYPE:' , decision_type)
+    #if decision_type == 'feature-test':
         # Access information about feature, for example, key and enabled status
-        print decision_info.get('feature_key')
-        print decision_info.get('feature_enabled')
-        print decision_info.get('source')      
+        #print('notification listener:')
+        #print(decision_info.get('feature_key'))
+        #print(decision_info.get('feature_enabled'))
+        
+        #print(decision_info.get('source'))      
         #Send data to analytics provider here
   
 notification_id = optimizely_client.notification_center.add_notification_listener(
