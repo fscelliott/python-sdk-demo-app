@@ -23,6 +23,35 @@ optimizely_client = optimizely.Optimizely(
 
 logging.info('Is optimizely_client valid: {}'.format(optimizely_client.is_valid))
 
+# define the 
+def on_decision_1(decision_type, user_id, attributes, decision_info):
+    # Add a DECISION Notification Listener for type FEATURE
+    print('decision type for decision 1:' , decision_type)
+    if decision_type == 'feature':
+        # Access information about feature, for example, key and enabled status
+        #print('notification listener:')
+        print('decision info from Not listener: flag key + enabled?')
+        print(decision_info.get('feature_key'))
+        print(decision_info.get('feature_enabled'))
+        
+        #print(decision_info.get('source'))      
+        #Send data to analytics provider here
+def on_decision_2(decision_type, user_id, attributes, decision_info):
+    # Add a DECISION Notification Listener for type FEATURE
+    print('decision type for decision 2:' , decision_type)
+    if decision_type == 'feature-variable':
+        # Access information about feature, for example, key and enabled status
+        #print('notification listener:')
+        print('decision info from Not listener: flag key + enabled?')
+        print(decision_info.get('feature_key'))
+        print(decision_info.get('feature_enabled'))
+        
+        #print(decision_info.get('source'))      
+        #Send data to analytics provider here        
+  
+notification_id = optimizely_client.notification_center.add_notification_listener(
+enums.NotificationTypes.DECISION, on_decision_1)
+
 # for demo purposes, generate random user ids so that the variation is re-evaluated every time
 random.seed()
 user_id = str(random.randrange(1001,9999))
@@ -34,6 +63,8 @@ discount_enabled = optimizely_client.is_feature_enabled('discount', user_id)
 # For now, let's view logging statements 
 
 if discount_enabled:  
+      notification_id = optimizely_client.notification_center.add_notification_listener(
+enums.NotificationTypes.DECISION, on_decision_2)
       discount_amount = optimizely_client.get_feature_variable('discount', 'amount', user_id)
       logging.info('{} got a discount of {}'.format(user_id, str(discount_amount)))
       # hardcode user actions so we can see experiment results in the Optimziely app 
@@ -46,20 +77,7 @@ else:
 
 
 
-def on_decision(decision_type, user_id, attributes, decision_info):
-    # Add a DECISION Notification Listener for type FEATURE
-    logging.info('NOT TYPE:' , decision_type)
-    #if decision_type == 'feature-test':
-        # Access information about feature, for example, key and enabled status
-        #print('notification listener:')
-        #print(decision_info.get('feature_key'))
-        #print(decision_info.get('feature_enabled'))
-        
-        #print(decision_info.get('source'))      
-        #Send data to analytics provider here
-  
-notification_id = optimizely_client.notification_center.add_notification_listener(
-enums.NotificationTypes.DECISION, on_decision)
+
 
 
 
